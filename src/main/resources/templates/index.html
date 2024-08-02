@@ -18,16 +18,16 @@
 <th:block th:if="${continue != null}">
     hello
 </th:block>
+<div class="container">
+    <div class="events d-flex flex-wrap">
 
-<div class="window">
-
+    </div>
 </div>
-
 </body>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script th:src="@{/js/Events.js}"></script>
 <script layout:fragment="script" th:inline="javascript">
-    const windowsDiv = document.querySelector('.window');
+    const eventsDiv = document.querySelector('.events');
 
     let datas;
 
@@ -37,7 +37,7 @@
 
             for (const item of data) {
 
-                str += `<div class="card w-25">
+                str += `<div class="card col-3">
                             <a href="${item.Link}"><img src="${item.Thumbnail}" class="card-img-top" alt="eventImage"></a>
                             <div class="card-body">
                                 <h5 class="card-title">${item.Title}</h5>
@@ -46,7 +46,7 @@
                             </div>
                         </div>`
             }
-            windowsDiv.innerHTML = str;
+            eventsDiv.innerHTML = str;
 
         }).catch(e => {
             console.log(e)
