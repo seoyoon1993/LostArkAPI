@@ -74,7 +74,7 @@
             str += `<div class="d-flex flex-wrap">`
 
             for (const item of data) {
-                    str += `<a href="${item.Link}" class="link-offset-2 link-underline link-underline-opacity-0 text-light bg-dark text-light my-3 mx-2 px-2 rounded" style="width: 29.5%">
+                str += `<a href="${item.Link}" class="link-offset-2 link-underline link-underline-opacity-0 text-light bg-dark text-light my-3 mx-2 px-2 rounded" style="width: 29.5%">
                                 <img src="${item.Thumbnail}" class="card-img-top img-fluid rounded" alt="eventImage">
                                 <h5 class="card-title my-2 ellipsis">${item.Title}</h5>
                                 <p class="card-text my-0">${`${item.StartDate}`.substring(0, 10)} ~ ${`${item.EndDate}`.substring(0, 10)}</p>
