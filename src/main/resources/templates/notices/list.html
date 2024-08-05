@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/basic.html}">
+<head>
+    <title>LostArkAPI</title>
+</head>
+
+<div layout:fragment="content">
+    <div class="container">
+        <div>
+            <ul class="list-group noticeList"></ul>
+        </div>
+        <div>
+            <ul class="pagination noticePaging"></ul>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script th:src="@{/js/Notices.js}"></script>
+</div>
+
+<script layout:fragment="script" th:inline="javascript">
+    let noticeList = document.querySelector(".noticeList");
+    let noticePaging = document.querySelector(".noticePaging");
+
+    function printList(data, page) {
+        let str = '';
+
+        if (data && data.length > 0) {
+            let start = (page-1) * 10;
+            let end = start + 10;
+            if(end > data.length)
+                end = data.length;
+            for (let i = start ; i < end ; i++) {
+                str += `<li class="list-group-item d-flex replyItem">
+                        <span>${data[i].Title}</span>
+                    </li>`
+            }
+        }
+        noticeList.innerHTML = str;
+    }
+    // 댓글 리스트에 대한 페이징 출력
+    function printPages(count, page) {
+
+        let pageStr = '';
+        let pageCount = (count % 10) > 0 ? (count/10 + 1) : (count / 10);
+        let end = (Math.ceil(page/10)) * 10;
+        let start = end - 9;
+        let last =(Math.ceil(count/10));
+        end =end > last ? last : end;
+        prev = start > 1;
+        next = count > end * 10;
+
+        if (prev) {
+            pageStr += `<li class="page-item"><a class="page-link" data-page="${start - 1}">PREV</a></li>`;
+        }
+
+        for (let i = start; i <= end; i++) {
+            pageStr += `<li class="page-item ${i == page ? "active" : ""}"><a class="page-link" data-page="${i}">${i}</a></li>`;
+        }
+
+        if (next) {
+            pageStr += `<li class="page-item"><a class="page-link" data-page="${end + 1}">NEXT</a></li>`;
+        }
+        noticePaging.innerHTML = pageStr;
+    }
+    // 데이터 받아와서 페이지에 맞는 댓글 출력
+    function printNotices(page) {
+        getNotices().then(
+            data => {
+                printList(data, page);
+                printPages(data.length, page);
+            }
+        ).catch(e => {
+            console.error(e);
+        })
+    }
+    // 페이지 클릭 이벤트
+    let page = 1;
+
+    noticePaging.addEventListener("click", function(e){
+        e.preventDefault();
+        e.stopPropagation();
+
+        const target = e.target;
+
+        if(!target || target.tagName != 'A'){
+            return;
+        }
+
+        const pageNum = target.getAttribute("data-page");
+
+        printNotices(pageNum);
+    }, false);
+
+    printNotices(page);
+</script>
+
+</html>
