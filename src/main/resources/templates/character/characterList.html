@@ -38,17 +38,26 @@
     const characterListDiv = document.querySelector('.characterList');
 
     function printCharacterList() {
+
+        let str = '';
+
         getCharacterList(searchInput.value).then(data => {
-            console.log(data);
+            if(data === null){
+                console.log("데이터 없음");
+            }else{
+                console.log(data);
+            }
+        }).catch(e => {
+            console.log(e)
         });
     }
 
     searchBtn.addEventListener("click", function (e) {
         e.preventDefault();
         e.stopPropagation();
-        printCharacterList();
-    });
-
+        if(searchInput.value === "") alert("사용자명을 입력하세요.");
+        else printCharacterList();
+    })
 
 </script>
 

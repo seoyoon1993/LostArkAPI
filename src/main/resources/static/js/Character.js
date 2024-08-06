@@ -2,13 +2,7 @@ const accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IktYMk40TkRDSTJ
 
 async function getCharacterList(searchText) {
 
-    let basicURL = `https://developer-lostark.game.onstove.com/characters`
-
-    if (searchText !== undefined) {
-        basicURL += "/" + searchText + "/siblings";
-    } else {
-        return "/characterlist";
-    }
+    let basicURL = "https://developer-lostark.game.onstove.com/characters/"+ searchText + "/siblings"
 
     console.log(basicURL);
 

@@ -8,13 +8,16 @@
     <title>LostArkAPI</title>
 </head>
 
+<div layout:fragment="backgroundImage">
+</div>
+
 <div layout:fragment="content">
-    <div class="content_container container">
-        <div class="siteHeader my-3">
+    <div class="content_container container mt-5">
+        <div class="siteHeader my-5">
             <h1 class="text-center">공 지 사 항</h1>
         </div>
         <div class="my-3">
-            <nav class="searchBar navbar bg-dark mb-3">
+            <nav class="searchBar navbar bg-dark mb-4">
                 <div class="d-flex w-100 px-2">
                     <input id="searchInput" class="form-control flex-grow-1 mx-2" type="search" name="searchText"
                            placeholder="Search">
@@ -155,6 +158,7 @@
     })
 
     let page = 1;
+
     printNotices(page);
 
 </script>
