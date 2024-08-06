@@ -12,12 +12,43 @@
 </div>
 <div layout:fragment="content">
     <div class="container">
-
+        <div class="siteHeader my-3">
+            <h1 class="text-center">유 저 검 색</h1>
+        </div>
+        <div class="my-3">
+            <nav class="searchBar navbar bg-dark mb-3">
+                <div class="d-flex w-100 px-2">
+                    <input id="searchInput" class="form-control flex-grow-1 mx-2" type="search"
+                           placeholder="Search">
+                    <button class="btn btn-secondary searchBtn mx-2 w-25" type="button">검색
+                    </button>
+                </div>
+            </nav>
+            <ul class="list-group noticeList"></ul>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script th:src="@{/js/Character.js}"></script>
 </div>
 
 <script layout:fragment="script" th:inline="javascript">
+
+    let searchInput = document.querySelector("#searchInput");
+    const searchBtn = document.querySelector(".searchBtn");
+    const characterListDiv = document.querySelector('.characterList');
+
+    function printCharacterList() {
+        getCharacterList(searchInput.value).then(data => {
+            console.log(data);
+        });
+    }
+
+    searchBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        printCharacterList();
+    });
+
 
 </script>
 
