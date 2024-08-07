@@ -9,37 +9,62 @@
 
 <div layout:fragment="content">
     <div class="container">
+        <div id="countdownExample">
+            <div class="values"></div>
+        </div>
         <div class="calendarDiv"></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script th:src="@{/js/library/easytimer.min.js}"></script>
     <script th:src="@{/js/Calendar.js}"></script>
 </div>
 
 <script layout:fragment="script" th:inline="javascript">
+
+    function timer(tag, date) {
+        var timerInstance = new easytimer.Timer();
+
+        var timer = timerInstance
+        var time = (new Date(date) - new Date()) / 1000;
+
+        timer.start({countdown: true, startValues: {seconds: time}});
+
+        tag.innerHTML = timer.getTimeValues().toString();
+        timer.addEventListener('secondsUpdated', function (e) {
+            timeStr = timer.getTimeValues().days + "일 ";
+            timeStr += timer.getTimeValues().hours + "시 ";
+            timeStr += timer.getTimeValues().minutes + "분 " ;
+            timeStr += timer.getTimeValues().seconds + "초";
+            tag.innerHTML = timeStr;
+        });
+        timer.addEventListener('targetAchieved', function (e) {
+            tag.innerHTML = "등장 !";
+        });
+    }
+    // -----------------------------------------------------------------------------------------------------------------
+
     const calendarDiv = document.querySelector(".calendarDiv");
 
     getCalendars().then(data => {
-        console.log(data);
-
         let categoryName = ["로웬", "모험 섬", "섬", "카오스게이트", "태초의 섬", "필드보스", "항해"];
         let count = 0;
+        let i = 0;
 
         let str = `<div class="my-5 bg-dark border rounded-3"><div class="mb-5 ps-5 pt-5"><h3>로웬</h3></div><div class="row row-cols-1 row-cols-md-5 g-4 px-5 pb-5">`;
         for (const o of data) {
-            let todayTime = '';
+            let nextTime = '';
 
             if(o.StartTimes === null)
-                todayTime = '사이트 정보 없음';
+                nextTime = '다음 정보 없음';
 
             if(o.StartTimes !== null) {
                 const now = new Date();
                 for (const time of o.StartTimes) {
                     if (new Date(time) > now) {
-                        console.log(o.ContentsName + " / " + time);
-                        todayTime = time;
+                        nextTime = time;
                         break;
                     } else{
-                        todayTime = '사이트 정보 없음';
+                        nextTime = '다음 정보 없음';
                     }
                 }
             }
@@ -52,15 +77,28 @@
                             <img src="${o.ContentsIcon}" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">${o.ContentsName}</h5>
-                                <p class="card-text">${todayTime}</p>
+                                <p class="card-text">${nextTime}</p>
+                                <div class="timerDiv"></div>
                             </div>
                         </div>
                     </div>`
+            i++;
         }
         str += `</div></div>`;
 
         calendarDiv.innerHTML = str;
+
+        getTimer();
     });
+
+    function getTimer(){3
+        const cardArr = document.querySelectorAll(".card-text");
+        const timerDivArr = document.querySelectorAll(".timerDiv");
+
+        for(let i = 0 ; i < cardArr.length ; i++){
+            timer(timerDivArr[i], cardArr[i].innerHTML);
+        }
+    }
 </script>
 
 </html>
