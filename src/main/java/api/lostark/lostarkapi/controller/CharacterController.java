@@ -16,4 +16,10 @@ public class CharacterController {
     public String characterListGet() {
         return "/character/characterlist";
     }
+
+    @GetMapping("/character")
+    @PreAuthorize("hasRole('USER')")
+    public String character() {
+        return "/character/character";
+    }
 }
