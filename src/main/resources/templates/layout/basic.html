@@ -19,7 +19,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg">
-    <div class="container" id="container">
+    <div class="container">
         <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
                 aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -44,7 +44,9 @@
         <form class="d-flex" role="search">
             <input class="searchValue form-control me-1" type="search" placeholder="캐릭터 명을 입력하세요." aria-label="Search" style="font-size:14px;">
             <button class="btn btn-outline-light" type="button" th:onclick="mainSearch()"><i class="bi bi-search"></i></button>
-            <button type="button" class="btn btn-danger ms-1" th:onclick="window.location.href='/logout'">Logout</button>
+
+            <button type="button" class="btn btn-success ms-1" sec:authorize="!isAuthenticated()" th:onclick="window.location.href='/auth/login'">Login</button>
+            <button type="button" class="btn btn-danger ms-1" sec:authorize="isAuthenticated()" th:onclick="window.location.href='/logout'">Logout</button>
         </form>
     </div>
 </nav>

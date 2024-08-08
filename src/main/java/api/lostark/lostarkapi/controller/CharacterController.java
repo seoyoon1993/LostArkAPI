@@ -26,3 +26,4 @@ public class CharacterController {
         return "/character/character";
     }
 }
+
