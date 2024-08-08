@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Log4j2
 @Controller
-@RequestMapping("/characterlist")
+@RequestMapping("/character")
 public class CharacterController {
 
-    @GetMapping("")
+    @GetMapping({"/list", "/list/{characterName}"})
     @PreAuthorize("hasRole('USER')")
     public String characterListGet() {
         return "/character/characterlist";

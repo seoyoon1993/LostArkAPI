@@ -22,21 +22,6 @@ async function getCharacterList(searchText) {
     return resultList;
 }
 
-async function getCharacter(characterName) {
-
-    let basicURL = "https://developer-lostark.game.onstove.com/armories/characters/" + characterName
-
-    const result = await axios.get(basicURL, {
-
-        headers: {
-            Authorization: `Bearer ${accessToken}`
-        }
-    });
-
-    console.log(result.data)
-    return result.data;
-}
-
 async function getCharacterProfile(characterName) {
 
     let basicURL = "https://developer-lostark.game.onstove.com/armories/characters/" + characterName + "/profiles"

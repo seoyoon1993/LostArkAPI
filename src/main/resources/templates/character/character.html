@@ -21,7 +21,7 @@
 </div>
 
 <script layout:fragment="script" th:inline="javascript">
-    let characterName = new URL(location.href).pathname.substring(15);
+    let characterName = new URL(location.href).pathname.substring(11);
     const profileDiv = document.querySelector('.profile');
 
     function printCharacterProfile(characterName) {
@@ -67,13 +67,6 @@
             profileDiv.innerHTML = profileStr;
         });
 
-    }
-
-    function printCharacter(characterName) {
-
-        getCharacter(characterName).then(data => {
-
-        });
     }
 
     function printCharacterEquipment(characterName) {
@@ -133,7 +126,6 @@
     }
 
     printCharacterProfile(characterName);
-    printCharacter(characterName);
     printCharacterEquipment(characterName);
     printCharacterAvatars(characterName);
     printCharacterCombatskills(characterName);
