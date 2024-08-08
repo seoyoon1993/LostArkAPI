@@ -90,7 +90,9 @@
         else printCharacterList(searchInput.value);
     })
 
-    printCharacterList(characterName);
+    if (characterName !== "") {
+        printCharacterList(characterName);
+    }
 
 </script>
 
