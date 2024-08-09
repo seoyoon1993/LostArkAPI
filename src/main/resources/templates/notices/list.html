@@ -16,26 +16,24 @@
         <div class="siteHeader my-5">
             <h1 class="text-center">공 지 사 항</h1>
         </div>
-        <form>
-            <div class="my-3">
-                <nav class="searchBar navbar bg-dark mb-4">
-                    <div class="d-flex w-100 px-2">
-                        <input id="searchInput" class="form-control flex-grow-1 mx-2" type="search" name="searchText"
-                               placeholder="Search">
-                        <select id="searchSelect" class="form-select mx-2 w-25" name="type">
-                            <option value="" selected>구분</option>
-                            <option value="공지">공지</option>
-                            <option value="점검">점검</option>
-                            <option value="이벤트">이벤트</option>
-                            <option value="상점">상점</option>
-                        </select>
-                        <button class="btn btn-secondary searchBtn mx-2 w-25" type="submit">검색
-                        </button>
-                    </div>
-                </nav>
-                <ul class="list-group noticeList"></ul>
-            </div>
-        </form>
+        <div class="my-3">
+            <nav class="searchBar navbar bg-dark mb-4">
+                <div class="d-flex w-100 px-2">
+                    <input id="searchInput" class="form-control flex-grow-1 mx-2" type="search" name="searchText"
+                           placeholder="Search">
+                    <select id="searchSelect" class="form-select mx-2 w-25" name="type">
+                        <option value="" selected>구분</option>
+                        <option value="공지">공지</option>
+                        <option value="점검">점검</option>
+                        <option value="이벤트">이벤트</option>
+                        <option value="상점">상점</option>
+                    </select>
+                    <button class="btn btn-secondary searchBtn mx-2 w-25" type="button">검색
+                    </button>
+                </div>
+            </nav>
+            <ul class="list-group noticeList"></ul>
+        </div>
         <div class="Page navigation example my-3">
             <ul class="pagination noticePaging justify-content-center"></ul>
         </div>
@@ -75,7 +73,7 @@
                         break;
                 }
                 str += `<a href="${data[i].Link}" target="_blank" class="link-offset-2 link-underline link-underline-opacity-0 text-light">${data[i].Title}</a></span>
-                        <span class="ellipsis w-15 text-center"><a href="${data[i].Link}" target="_blank" class="link-offset-2 link-underline link-underline-opacity-0 text-light">${`${data[i].Date}`.substring(0, 10)}</a></span>
+                        <span class="ellipsis w-15 text-center"><a href="${data[i].Link}" target="_blank" class="link-offset-2 link-underline link-underline-opacity-0 text-light">${`${data[i].Date}`.substring(0,10)}</a></span>
                         </li>`;
             }
         }
@@ -114,7 +112,7 @@
 
     // 데이터 받아와서 페이지에 맞는 댓글 출력
     function printNotices(page, searchText, type) {
-        if ((searchText !== undefined && searchText.length > 0) || (type !== undefined && type.length > 0)) {
+        if ((searchText !== undefined && searchText.length > 0) || (type !== undefined && type.length>0)) {
             getNotices(searchText, type).then(
                 data => {
                     printList(data, page);

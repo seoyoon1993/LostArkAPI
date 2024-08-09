@@ -91,7 +91,9 @@
             return;
         }
 
-        window.location.href = `/character/list/${searchValue}`
+        let searchUri = encodeURI(searchValue);
+
+        window.location.href = `/character/list/${searchUri}`
     }
 </script>
 <th:block layout:fragment="script">
