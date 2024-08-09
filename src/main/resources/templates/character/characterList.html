@@ -15,17 +15,19 @@
         <div class="siteHeader my-3 row">
             <h1 class="text-center">유 저 검 색</h1>
         </div>
-        <div class="my-3 row">
-            <nav class="searchBar navbar bg-dark mb-3">
-                <div class="d-flex w-100 px-2">
-                    <input id="searchInput" class="form-control flex-grow-1 mx-2" type="search"
-                           placeholder="Search" value="아메리카노커피">
-                    <button class="btn btn-secondary searchBtn mx-2 w-25" type="button">검색
-                    </button>
-                </div>
-            </nav>
-            <ul class="list-group noticeList"></ul>
-        </div>
+        <form>
+            <div class="my-3 row">
+                <nav class="searchBar navbar bg-dark mb-3">
+                    <div class="d-flex w-100 px-2">
+                        <input autofocus id="searchInput" class="form-control flex-grow-1 mx-2" type="search"
+                               placeholder="Search">
+                        <button class="btn btn-secondary searchBtn mx-2 w-25" type="submit">검색
+                        </button>
+                    </div>
+                </nav>
+                <ul class="list-group noticeList"></ul>
+            </div>
+        </form>
         <div class="characterList row d-flex justify-content-start">
 
         </div>
@@ -41,6 +43,8 @@
     const characterListDiv = document.querySelector('.characterList');
 
     let characterName = new URL(location.href).pathname.substring(16);
+    searchInput.value = characterName;
+
 
     function printCharacterList(searchText) {
 
