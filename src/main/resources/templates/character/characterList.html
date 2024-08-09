@@ -43,7 +43,7 @@
     const characterListDiv = document.querySelector('.characterList');
 
     let characterName = new URL(location.href).pathname.substring(16);
-    searchInput.value = characterName;
+    searchInput.value = decodeURI(characterName);
 
 
     function printCharacterList(searchText) {
