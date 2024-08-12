@@ -13,20 +13,19 @@
 <div layout:fragment="content">
     <div class="container">
         <div class="d-flex justify-content-center align-items-center text-white">
-            <div class="profile align-items-center card bg-dark col-5 text-white mx-auto my-5" style="height: 500px">
+            <div class="profile align-items-center card bg-dark col-6 text-white mx-auto my-5" style="height: 600px">
 
-                <p class="나침반 ellipsis"></p>
-                <p class="부적 ellipsis"></p>
-            </div>
-            <div class="characterStat align-items-center card bg-dark col-3 text-white mx-auto" style="height: 500px">
 
             </div>
-            <div class="engravings card bg-dark col-3 text-white mx-auto" style="height: 500px">
+            <div class="characterStat align-items-center card bg-dark col-2 text-white mx-auto" style="height: 600px">
+
+            </div>
+            <div class="engravings card bg-dark col-3 text-white mx-auto" style="height: 600px">
 
             </div>
         </div>
         <div class="d-flex justify-content-center align-items-center text-white">
-            <div class="equipment card bg-dark col-4 text-white mx-auto my-2" style="height: 600px">
+            <div class="equipment card bg-dark col-5 text-white mx-auto my-2" style="height: 600px">
                 <div class="mx-2 my-2 bg-dark">
                     <p class="무기 ellipsis"></p>
                     <p class="투구 ellipsis"></p>
@@ -36,7 +35,7 @@
                     <p class="어깨 ellipsis"></p>
                 </div>
             </div>
-            <div class="accessory card bg-dark col-4 text-white mx-auto my-2" style="height: 600px">
+            <div class="accessory card bg-dark col-5 text-white mx-auto my-2" style="height: 600px">
                 <div class="mx-2 my-2 bg-dark">
                     <p class="목걸이 ellipsis"></p>
                     <p class="귀걸이1 ellipsis"></p>
@@ -47,7 +46,7 @@
                     <p class="팔찌 ellipsis"></p>
                 </div>
             </div>
-            <div class="gems card bg-dark col-3 text-white mx-auto my-2" style="height: 600px">
+            <div class="gems card justify-content-center align-items-center bg-dark col-1 text-white mx-auto my-2" style="height: 600px">
 
             </div>
         </div>
@@ -122,6 +121,8 @@
                                     <p class="ellipsis"><strong>원정대 : </strong>${data.ArmoryProfile.ExpeditionLevel}</p>
                                     <p class="ellipsis"><strong>P V P : </strong>${data.ArmoryProfile.PvpGradeName}</p>
                                     <p class="ellipsis"><strong>영 지 : </strong>${tempTownName}</p>
+                                    <p class="나침반 ellipsis"></p>
+                <p class="부적 ellipsis"></p>
                                 </div>`
 
             profileStr += `<div class="w-50">
@@ -164,10 +165,12 @@
             let equipmentType = ["무기", "투구", "상의", "하의", "장갑", "어깨", "목걸이", "귀걸이", "귀걸이", "반지", "반지", "어빌리티 스톤", "팔찌", "나침반", "부적"]
             let count = 0;
 
+            let ear = false;
+            let ring = false;
+
             for (let i = 0; i < equipmentType.length; i++) {
                 let type = data.ArmoryEquipment[count].Type;
-                let ear = false;
-                let ring = false;
+
 
                 if (type === equipmentType[i]) {
                     if (equipmentType[i] === "어빌리티 스톤") {
@@ -182,28 +185,52 @@
                         ring = true;
                     } else if (equipmentType[i] === "반지" && ring) {
                         document.querySelector(".반지2").innerHTML = switchArmoryGrade(data.ArmoryEquipment[count]);
-                    }
-                    else {
+                    } else if (equipmentType[i] === "나침반") {
+                        document.querySelector(".나침반").innerHTML = switchArmoryGrade(data.ArmoryEquipment[count]);
+                    } else if (equipmentType[i] === "부적") {
+                        document.querySelector(".부적").innerHTML = switchArmoryGrade(data.ArmoryEquipment[count]);
+                    } else {
                         document.querySelector("." + equipmentType[i]).innerHTML = switchArmoryGrade(data.ArmoryEquipment[count]);
                     }
                     count++;
                 } else {
                     if (equipmentType[i] === "어빌리티 스톤") {
-                        document.querySelector(".어빌리티스톤").innerHTML = `<p></p>`;
+                        document.querySelector(".어빌리티스톤").innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                                                               <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                                                                           </svg>`;
+                    } else if (equipmentType[i] === "귀걸이" && !ear) {
+                        document.querySelector(".귀걸이1").innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                                                           <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                                                                       </svg>`;
+                        ear = true;
+                    } else if (equipmentType[i] === "귀걸이" && ear) {
+                        document.querySelector(".귀걸이2").innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                                                           <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                                                                       </svg>`;
+                    } else if (equipmentType[i] === "반지" && !ring) {
+                        document.querySelector(".반지1").innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                                                           <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                                                                     </svg>`;
+                        ring = true;
+                    } else if (equipmentType[i] === "반지" && ring) {
+                        document.querySelector(".반지2").innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                                                           <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                                                                     </svg>`;
+                    } else if (equipmentType[i] === "나침반") {
+                        document.querySelector(".나침반").innerHTML = switchArmoryGrade(data.ArmoryEquipment[count]);
+                    } else if (equipmentType[i] === "부적") {
+                        document.querySelector(".부적").innerHTML = switchArmoryGrade(data.ArmoryEquipment[count]);
                     } else {
-                        document.querySelector("." + equipmentType[i]).innerHTML = `<p></p>`;
+                        document.querySelector("." + equipmentType[i]).innerHTML = switchArmoryGrade(data.ArmoryEquipment[count]);
                     }
+                    count++;
                 }
 
             }
 
-            gemsStr += `<div class="card bg-dark text-white mx-2">`
-
             for (gemsData of data.ArmoryGem.Gems) {
                 gemsStr += `<img src="${gemsData.Icon}" class="border rounded mx-3" style="width: 50px; height: 50px">`
             }
-
-            gemsStr += `</div>`
 
             gemsDiv.innerHTML += gemsStr;
         });
