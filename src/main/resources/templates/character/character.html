@@ -15,6 +15,8 @@
         <div class="d-flex justify-content-center align-items-center text-white">
             <div class="profile align-items-center card bg-dark col-5 text-white mx-auto my-5" style="height: 500px">
 
+                <p class="나침반 ellipsis"></p>
+                <p class="부적 ellipsis"></p>
             </div>
             <div class="characterStat align-items-center card bg-dark col-3 text-white mx-auto" style="height: 500px">
 
@@ -24,13 +26,28 @@
             </div>
         </div>
         <div class="d-flex justify-content-center align-items-center text-white">
-            <div class="equipment card bg-dark align-items-center col-5 text-white mx-auto my-3" style="height: 700px">
-
+            <div class="equipment card bg-dark col-4 text-white mx-auto my-2" style="height: 600px">
+                <div class="mx-2 my-2 bg-dark">
+                    <p class="무기 ellipsis"></p>
+                    <p class="투구 ellipsis"></p>
+                    <p class="상의 ellipsis"></p>
+                    <p class="하의 ellipsis"></p>
+                    <p class="장갑 ellipsis"></p>
+                    <p class="어깨 ellipsis"></p>
+                </div>
             </div>
-            <div class="accessory card bg-dark align-items-center col-3 text-white mx-auto my-3" style="height: 700px">
-
+            <div class="accessory card bg-dark col-4 text-white mx-auto my-2" style="height: 600px">
+                <div class="mx-2 my-2 bg-dark">
+                    <p class="목걸이 ellipsis"></p>
+                    <p class="귀걸이1 ellipsis"></p>
+                    <p class="귀걸이2 ellipsis"></p>
+                    <p class="반지1 ellipsis"></p>
+                    <p class="반지2 ellipsis"></p>
+                    <p class="어빌리티스톤 ellipsis"></p>
+                    <p class="팔찌 ellipsis"></p>
+                </div>
             </div>
-            <div class="gems card bg-dark align-items-center col-3 text-white mx-auto my-3" style="height: 700px">
+            <div class="gems card bg-dark col-3 text-white mx-auto my-2" style="height: 600px">
 
             </div>
         </div>
@@ -44,17 +61,36 @@
     let profileDiv = document.querySelector('.profile');
     let characterStatDiv = document.querySelector('.characterStat');
     let engravingsDiv = document.querySelector('.engravings');
-    let equipmentDiv = document.querySelector('.equipment');
-    let accessoryDiv = document.querySelector('.accessory')
+
     let gemsDiv = document.querySelector('.gems');
 
+    function switchArmoryGrade(armoryEquipment) {
+
+        switch (armoryEquipment.Grade) {
+
+            case "고대":
+                return `<p class="ellipsis"><span class="badge d-inline mx-3" style="background: beige; color: black">${armoryEquipment.Grade}</span><img src="${armoryEquipment.Icon}" class="border rounded mx-3" style="width: 50px; height: 50px">${armoryEquipment.Name}</p>`
+                break;
+            case "유물":
+                return `<p class="ellipsis"><span class="badge d-inline mx-3" style="background: darkorange; color: white">${armoryEquipment.Grade}</span><img src="${armoryEquipment.Icon}" class="border rounded mx-3" style="width: 50px; height: 50px">${armoryEquipment.Name}</p>`
+                break;
+            case "전설":
+                return `<p class="ellipsis"><span class="badge d-inline mx-3" style="background: yellow; color: white">${armoryEquipment.Grade}</span><img src="${armoryEquipment.Icon}" class="border rounded mx-3" style="width: 50px; height: 50px">${armoryEquipment.Name}</p>`
+                break;
+            case "영웅":
+                return `<p class="ellipsis"><span class="badge d-inline mx-3" style="background: rebeccapurple; color: white">${armoryEquipment.Grade}</span><img src="${armoryEquipment.Icon}" class="border rounded mx-3" style="width: 50px; height: 50px">${armoryEquipment.Name}</p>`
+                break;
+            case "희귀":
+                return `<p class="ellipsis"><span class="badge d-inline mx-3" style="background: deepskyblue; color: white">${armoryEquipment.Grade}</span><img src="${armoryEquipment.Icon}" class="border rounded mx-3" style="width: 50px; height: 50px">${armoryEquipment.Name}</p>`
+                break;
+        }
+    }
 
     function printCharacter(characterName) {
         let profileStr = '';
         let characterStatStr = '';
         let effectStr = '';
-        let equipmentStr = '';
-        let accessoryStr = '';
+
         let gemsStr = '';
 
         getCharacter(characterName).then(data => {
@@ -86,8 +122,9 @@
                                     <p class="ellipsis"><strong>원정대 : </strong>${data.ArmoryProfile.ExpeditionLevel}</p>
                                     <p class="ellipsis"><strong>P V P : </strong>${data.ArmoryProfile.PvpGradeName}</p>
                                     <p class="ellipsis"><strong>영 지 : </strong>${tempTownName}</p>
-                                </div>
-                                <div class="w-50">
+                                </div>`
+
+            profileStr += `<div class="w-50">
                                     <img src="${data.ArmoryProfile.CharacterImage}" class="img img-fluid border rounded-3" alt="사진정보 없음">
                                     <div class="my-3">`
 
@@ -95,8 +132,7 @@
                 profileStr += `<p class="ellipsis"><string>${tendency.Type} : </strong>${tendency.Point} / ${tendency.MaxPoint}</p>`
             }
 
-            profileStr += `     </div>
-                           </div>`
+            profileStr += `</div>`
 
             characterStatStr += `<div class="card-body my-3 align-items-center">`
 
@@ -125,23 +161,41 @@
 
             engravingsDiv.innerHTML += effectStr;
 
-            equipmentStr += `<div class="text-white mx-2">
-                             <div class="d-flex mx-2 my-2 bg-dark">
-                             <div class="w-50">`
+            let equipmentType = ["무기", "투구", "상의", "하의", "장갑", "어깨", "목걸이", "귀걸이", "귀걸이", "반지", "반지", "어빌리티 스톤", "팔찌", "나침반", "부적"]
+            let count = 0;
 
-            for (let i = 0; i < 6; i++) {
-                equipmentStr += `<p class="ellipsis"><img src="${data.ArmoryEquipment[i].Icon}" class="border rounded mx-3" style="width: 50px; height: 50px">(${data.ArmoryEquipment[i].Grade}) ${data.ArmoryEquipment[i].Name}</p>`
+            for (let i = 0; i < equipmentType.length; i++) {
+                let type = data.ArmoryEquipment[count].Type;
+                let ear = false;
+                let ring = false;
+
+                if (type === equipmentType[i]) {
+                    if (equipmentType[i] === "어빌리티 스톤") {
+                        document.querySelector(".어빌리티스톤").innerHTML = switchArmoryGrade(data.ArmoryEquipment[count]);
+                    } else if (equipmentType[i] === "귀걸이" && !ear) {
+                        document.querySelector(".귀걸이1").innerHTML = switchArmoryGrade(data.ArmoryEquipment[count]);
+                        ear = true;
+                    } else if (equipmentType[i] === "귀걸이" && ear) {
+                        document.querySelector(".귀걸이2").innerHTML = switchArmoryGrade(data.ArmoryEquipment[count]);
+                    } else if (equipmentType[i] === "반지" && !ring) {
+                        document.querySelector(".반지1").innerHTML = switchArmoryGrade(data.ArmoryEquipment[count]);
+                        ring = true;
+                    } else if (equipmentType[i] === "반지" && ring) {
+                        document.querySelector(".반지2").innerHTML = switchArmoryGrade(data.ArmoryEquipment[count]);
+                    }
+                    else {
+                        document.querySelector("." + equipmentType[i]).innerHTML = switchArmoryGrade(data.ArmoryEquipment[count]);
+                    }
+                    count++;
+                } else {
+                    if (equipmentType[i] === "어빌리티 스톤") {
+                        document.querySelector(".어빌리티스톤").innerHTML = `<p></p>`;
+                    } else {
+                        document.querySelector("." + equipmentType[i]).innerHTML = `<p></p>`;
+                    }
+                }
+
             }
-
-            equipmentStr += `</div>`
-
-            equipmentDiv.innerHTML += equipmentStr;
-
-            for (let i = 6; i < data.ArmoryEquipment.length; i++) {
-                accessoryStr += `<p class="ellipsis"><img src="${data.ArmoryEquipment[i].Icon}" class="border rounded mx-3" style="width: 50px; height: 50px">(${data.ArmoryEquipment[i].Grade}) ${data.ArmoryEquipment[i].Name}</p>`
-            }
-
-            accessoryDiv.innerHTML += accessoryStr;
 
             gemsStr += `<div class="card bg-dark text-white mx-2">`
 
@@ -153,6 +207,8 @@
 
             gemsDiv.innerHTML += gemsStr;
         });
+
+
 
         function printCharacterAvatars(characterName) {
 
