@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Log4j2
 @Controller
 @RequestMapping("/calendar")
+
 public class CalendarController {
 
     @GetMapping("")
